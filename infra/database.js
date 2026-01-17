@@ -1,5 +1,7 @@
 import { Client } from "pg";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 async function query(queryObject) {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
@@ -7,7 +9,7 @@ async function query(queryObject) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "development" ? false : true,
+    ssl: isProduction ? true : false,
   });
 
   console.log("Credenciais do Postgres", {
